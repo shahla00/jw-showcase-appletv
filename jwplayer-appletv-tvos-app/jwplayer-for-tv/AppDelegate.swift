@@ -29,29 +29,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     static let TVConfigURL = "https://tvos.jwpsrv.com/resources/configs"
     static let TVBootURL = "\(AppDelegate.TVBaseURL)/js/application.js"
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    ///
+    ///
+    ///
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)
+        -> Bool
+    {
         // Override point for customization after application launch.
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-
-        let infoBundle = NSBundle.mainBundle()
+        window = UIWindow(frame: UIScreen.main.bounds)
 
         let appControllerContext = TVApplicationControllerContext()
-
-
         appControllerContext.launchOptions["baseURL"] = AppDelegate.TVBaseURL
         appControllerContext.launchOptions["configService"] = AppDelegate.TVConfigURL
-        appControllerContext.launchOptions["account_key"] = infoBundle.infoDictionary?["jwplayer.account_key"]
-        appControllerContext.javaScriptApplicationURL = NSURL(string: AppDelegate.TVBootURL)!
+        appControllerContext.launchOptions["account_key"] = Bundle.main.infoDictionary?["jwplayer.account_key"]
+        appControllerContext.javaScriptApplicationURL = URL(string: AppDelegate.TVBootURL)!
 
         if let options = launchOptions {
             for (kind, value) in options {
-                if let kindStr = kind as? String {
-                    appControllerContext.launchOptions[kindStr] = value
-                }
+                appControllerContext.launchOptions[kind.rawValue] = value
             }
         }
 
-        self.appController = TVApplicationController(context: appControllerContext, window: self.window, delegate: self)
+        appController = TVApplicationController(context: appControllerContext, window: window, delegate: self)
 
         return true
     }
