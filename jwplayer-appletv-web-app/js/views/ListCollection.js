@@ -58,13 +58,6 @@ ViewManager.registerView("ListCollection", function(doc) {
 
   function insertPlaylist(playlistId) {
     var placeholder;
-
-    if (playlistId != featured) {
-      placeholder = document.createElement("div");
-       // Create a placecholder in the CollectionList so the lists are inserted in order
-      collectionList.appendChild(placeholder);
-    }
-
     PlaylistManager.getPlaylist(playlistId)
       // Bind the placeholder to the callback so it can be replaced with the templated markup
       .then(renderPlaylist.bind(placeholder))
